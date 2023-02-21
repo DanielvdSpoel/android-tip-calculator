@@ -2,9 +2,13 @@ package nl.danielvdspoel.tipcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -12,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,10 +37,14 @@ public class MainActivity extends AppCompatActivity {
     TextView amountPerPersonTextView;
     TextView amountPerPersonLabelTextView;
 
+    Button openSettingsButton;
+    Button saveAsDefaultButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         inputBox = findViewById(R.id.inputBox);
         tipPercentageSeekbar = findViewById(R.id.tipPercentageSeekbar);
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         splittingCostYes = findViewById(R.id.splittingCostYes);
         splittingCostNo = findViewById(R.id.splittingCostNo);
         splittingCostLabel = findViewById(R.id.splittingCostCountLabel);
-        splittingCostInput = findViewById(R.id.splittingCostInput);
+        splittingCostInput = findViewById(R.id.splittingCostAmount);
         tipAmountLabel = findViewById(R.id.tipAmountLabel);
 
         totalBeforeTipTextView = findViewById(R.id.totalBeforeTipTextView);
@@ -52,6 +61,34 @@ public class MainActivity extends AppCompatActivity {
         totalAfterTipTextView = findViewById(R.id.totalAfterTipTextView);
         amountPerPersonTextView = findViewById(R.id.amountPerPersonTextView);
         amountPerPersonLabelTextView = findViewById(R.id.amountPerPersonLabelTextView);
+
+        openSettingsButton = findViewById(R.id.openSettingsButton);
+        saveAsDefaultButton = findViewById(R.id.saveAsDefaultButton);
+
+        SharedPreferences file = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+
+
+        tipPercentageSeekbar.setProgress(file.getInt("tipPercentage", 15));
+        percentageTextView.setText(file.getInt("tipPercentage", 15) + "%");
+
+        if (file.getBoolean("splittingCost", false)) {
+            splittingCostLabel.setVisibility(TextView.VISIBLE);
+            splittingCostInput.setVisibility(TextView.VISIBLE);
+            amountPerPersonTextView.setVisibility(TextView.VISIBLE);
+            amountPerPersonLabelTextView.setVisibility(TextView.VISIBLE);
+            splittingCostYes.setChecked(true);
+            splittingCostInput.setText(String.valueOf(file.getInt("splittingCostCount", 2)));
+        } else {
+            splittingCostNo.setChecked(true);
+        }
+
+        saveAsDefaultButton.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = file.edit();
+            editor.putInt("tipPercentage", tipPercentageSeekbar.getProgress());
+            editor.putBoolean("splittingCost", splittingCostYes.isChecked());
+            editor.putInt("splittingCostCount", Integer.parseInt(splittingCostInput.getText().toString()));
+            editor.apply();
+        });
 
         tipPercentageSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -119,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
             }
+        });
+
+        openSettingsButton.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), DefaultSettingsActivity.class);
+            startActivity(i);
         });
 
     }

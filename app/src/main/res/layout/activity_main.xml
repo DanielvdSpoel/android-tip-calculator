@@ -22,7 +22,7 @@
         android:id="@+id/amountBeforeTipLabel"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
         android:text="Amount before tip"
         android:textStyle="bold"
@@ -47,7 +47,7 @@
         android:id="@+id/tipPercentageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Tip percentage"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,49 +80,12 @@
         android:id="@+id/splittingCostLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Are you splitting the costs?"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/percentageTextView" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/splittingCostLayout"
-        android:layout_width="300dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splittingCostRadioGroup">
-
-        <EditText
-            android:id="@+id/splittingCostInput"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:ems="10"
-            android:hint="Amount of people"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            android:text="2"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/splittingCostCountLabel" />
-
-        <TextView
-            android:id="@+id/splittingCostCountLabel"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="With how many people are you splitting the cost?"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RadioGroup
         android:id="@+id/splittingCostRadioGroup"
@@ -151,11 +114,48 @@
             android:text="Yes" />
     </RadioGroup>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/splittingCostLayout"
+        android:layout_width="300dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splittingCostRadioGroup">
+
+        <EditText
+            android:id="@+id/splittingCostAmount"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ems="10"
+            android:hint="Amount of people"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:text="2"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/splittingCostCountLabel" />
+
+        <TextView
+            android:id="@+id/splittingCostCountLabel"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="With how many people are you splitting the cost?"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Result:"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,8 +163,9 @@
         app:layout_constraintTop_toBottomOf="@+id/splittingCostLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="110dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.387"
@@ -253,5 +254,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/totalTipTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/openSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Open default settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <Button
+        android:id="@+id/saveAsDefaultButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Save as default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/openSettingsButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
